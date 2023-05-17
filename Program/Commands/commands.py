@@ -8,7 +8,9 @@ from Program.Handlers import add_watermark
 from Program.Utils import singleton
 
 SAVE_DIR = Path(os.getcwd(), "cache")
-ASSET = Path(os.getcwd(), "assets", "help.png")
+ASSET1 = Path(os.getcwd(), "assets", "Guide.png")
+ASSET2 = Path(os.getcwd(), "assets", "Guide2.png")
+ASSET3 = Path(os.getcwd(), "assets", "Guide3.png")
 
 
 @singleton.dispatcher.message_handler(commands=["start"])
@@ -20,14 +22,15 @@ async def start(message):
 async def help_bot(message):
     await message.answer(
         """
-        Использование:
-        help.png) Установите текст командой
-           /set Какой-то текст
-        2) Отправьте изображение
-        3) Готово
+        Нажмите на кнопку 'Заполнить форму'.
+        Далее следуйте инструкциям формы.
+        Отправьте изображение
+        Готово
         """
     )
-    await singleton.bot.send_photo(chat_id=message.chat.id, photo=types.InputFile(ASSET))
+    await singleton.bot.send_photo(chat_id=message.chat.id, photo=types.InputFile(ASSET1))
+    await singleton.bot.send_photo(chat_id=message.chat.id, photo=types.InputFile(ASSET2))
+    await singleton.bot.send_photo(chat_id=message.chat.id, photo=types.InputFile(ASSET3))
 
 
 @singleton.dispatcher.message_handler(content_types=["photo", "document"])
@@ -52,3 +55,6 @@ async def set_watermark(message: types.Message):
 @singleton.dispatcher.message_handler(text=USERS)
 async def users(message: types.Message):
     await message.reply(singleton.table.get_count())
+
+
+print("Подключено", __name__)

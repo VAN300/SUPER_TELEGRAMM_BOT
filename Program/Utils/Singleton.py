@@ -1,6 +1,7 @@
 import asyncio
 
 from aiogram import Bot, Dispatcher
+from aiogram.contrib.fsm_storage.memory import MemoryStorage
 
 from Program.Bases import WatermarkTable
 
@@ -9,8 +10,8 @@ class Singleton:
     _instance = None
 
     def __init__(self):
-        self.bot: Bot = Bot(token="token")
-        self.dispatcher: Dispatcher = Dispatcher(self.bot, loop=asyncio.get_event_loop())
+        self.bot: Bot = Bot(token="6248457570:AAEgfGYlXhVl-ocLqYLr22bOgqx239AMycM")
+        self.dispatcher: Dispatcher = Dispatcher(self.bot, loop=asyncio.get_event_loop(), storage=MemoryStorage())
         self.table: WatermarkTable = WatermarkTable()
 
     def __new__(cls):

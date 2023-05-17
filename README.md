@@ -1,2 +1,3 @@
 # SUPER_TELEGRAMM_BOT
-beta
+
+Version 1.0 RELEASE

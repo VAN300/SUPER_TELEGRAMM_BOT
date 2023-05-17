@@ -16,7 +16,8 @@ class WatermarkTable:
             """
             CREATE TABLE IF NOT EXISTS watermarks(
                 chatId INT PRIMARY KEY,
-                watermark TEXT
+                watermark TEXT,
+                angel INT
                 )
             """
         )
@@ -35,10 +36,10 @@ class WatermarkTable:
         result = self.cursor.fetchone()
 
         if result:
-            return result[1]
-        return "Установите текст"
+            return result[1:]
+        return ("Следуйте ИНСТРУКЦИИ", 0)
 
-    def set_watermark(self, chat_id, watermark: str):
+    def set_watermark(self, chat_id, watermark: str, angel: int):
         exists = self.cursor.execute(
             """
             SELECT * 
@@ -48,27 +49,28 @@ class WatermarkTable:
         ).fetchone()
 
         if not exists:
-            self.__paste(chat_id, watermark)
+            self.__paste(chat_id, watermark, angel)
 
         self.cursor.execute(
             """
             UPDATE watermarks
             
-            SET watermark = ?
+            SET watermark = ?,
+            angel = ?
             
             WHERE chatId == ?
-            """, (watermark, str(chat_id))
+            """, (watermark, str(angel), str(chat_id))
         )
         self.connection.commit()
 
-    def __paste(self, chat_id, watermark):
+    def __paste(self, chat_id, watermark, angel):
         self.cursor.execute(
             """
             INSERT INTO watermarks
-            (chatId, watermark)
+            (chatId, watermark, angel)
             VALUES
-            (?, ?)
-            """, (chat_id, watermark)
+            (?, ?, ?)
+            """, (chat_id, watermark, angel)
         )
         self.connection.commit()
 
