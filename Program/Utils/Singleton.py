@@ -10,7 +10,7 @@ class Singleton:
     _instance = None
 
     def __init__(self):
-        self.bot: Bot = Bot(token="6248457570:AAEgfGYlXhVl-ocLqYLr22bOgqx239AMycM")
+        self.bot: Bot = Bot(token="Bot_token")
         self.dispatcher: Dispatcher = Dispatcher(self.bot, loop=asyncio.get_event_loop(), storage=MemoryStorage())
         self.table: WatermarkTable = WatermarkTable()
 
